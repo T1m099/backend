@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "\"Backend for our App\"",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/T1m099/backend.git"
+  },
+  "author": "Timo Hätinger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/T1m099/backend/issues"
+  },
+  "homepage": "https://github.com/T1m099/backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
