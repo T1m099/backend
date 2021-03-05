@@ -5,7 +5,7 @@ const app = express();
 // Connect to MongoDB
 mongoose
     .connect(
-        'mongodb://user_db/test'
+        'mongodb://user_db/test',{ useNewUrlParser: true,useUnifiedTopology: true }
     )
     .then(() => console.log('MongoDB Connected loloolloolloolloollloollolloo'))
     .catch(err => console.log(err));
