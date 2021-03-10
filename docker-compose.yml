@@ -20,28 +20,28 @@ services:
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
       #HTTP to HTTPS redirect
-      - --certificatesresolvers.myresolver.acme.httpchallenge=true
-      - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
-      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - --certificatesresolvers.myresolver.acme.email=wi19002@lehre.dhbw-stuttgart.de
-      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+#      - --certificatesresolvers.myresolver.acme.httpchallenge=true
+#      - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+#      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+#      - --certificatesresolvers.myresolver.acme.email=wi19002@lehre.dhbw-stuttgart.de
+#      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
     ports:
       - "80:80"
-      - "443:443"
+#      - "443:443"
       #ebabled die Browser Oberfläche zusammen mit api insecure= true
       - "8080:8080"
     volumes:
       #Volumes are necessary for the nodemon integration -> no rebuilding necessary
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       #necessary for Let#s encrypt
-      - "./letsencrypt:/letsencrypt"
+#      - "./letsencrypt:/letsencrypt"
     networks:
       - traefik-network
-    labels:
-      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.http-catchall.entrypoints=web"
-      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+#    labels:
+#      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
+#      - "traefik.http.routers.http-catchall.entrypoints=web"
+#      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+#      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   user_events:
     build: ./user_events
@@ -50,10 +50,10 @@ services:
       #enable container in traefik
       - traefik.enable=true
       #route definition
-      - traefik.http.routers.user_events.rule=Host(`test.com`)
+      - traefik.http.routers.user_events.rule=Host(`test.localhost`)
       #http redirect
-      - traefik.http.routers.user_events.entrypoints=websecure
-      - traefik.http.routers.user_events.tls.certresolver=myresolver
+#      - traefik.http.routers.user_events.entrypoints=websecure
+#      - traefik.http.routers.user_events.tls.certresolver=myresolver
     volumes:
       - ./user_events:/app
     networks:
@@ -63,6 +63,9 @@ services:
   user_db:
     image: mongo:latest
     container_name: user_db
+    restart: always
+    volumes:
+        - ./user_events/model.js:/app
     networks:
       - user-auth
 
@@ -71,10 +74,10 @@ services:
     container_name: user-logins
     labels:
       - traefik.enable=true
-      - traefik.http.routers.user_logins.rule=Host(`test3.com`)
+      - traefik.http.routers.user_logins.rule=Host(`test3.localhost`)
       #http redirect
-      - traefik.http.routers.user_logins.entrypoints=websecure
-      - traefik.http.routers.user_logins.tls.certresolver=myresolver
+#      - traefik.http.routers.user_logins.entrypoints=websecure
+#      - traefik.http.routers.user_logins.tls.certresolver=myresolver
     volumes:
       - ./user_logins:/app
     networks:
