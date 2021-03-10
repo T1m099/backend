@@ -1,13 +1,14 @@
 const express = require('express');
-const app = express();
 const mongoose = require('mongoose');
 const Medication = require('./Models/medications');
 
+const app = express();
+app.use(express.json({type:"application/json"}));
 mongoose
     .connect(
-        'mongodb://user_db/test',{ useNewUrlParser: true,useUnifiedTopology: true}
+        'mongodb://user_db/',{ useNewUrlParser: true,useUnifiedTopology: true}
     )
-    .then(() => console.log('MongoDB connected '))
+    .then(() =>  console.log('Mongo connected'))
     .catch(err => console.log(err));
 
 
@@ -16,19 +17,12 @@ app.get('/', (req, res) => {
     res.send('Hello World, it works (at least on my machine)')
 });
 
-app.get("/db", (req, res, next) => {
-    Medication.find()
+app.get( '/db2', (req, res) => {
+     Medication.find()
         .exec()
         .then(docs => {
             console.log(docs);
-            //if(docs.length >= 0) {
             res.status(200).json(docs);
-            // } else {
-            //   res.status(404).json({
-            //      message: 'No entries found'
-            //   });
-            // }
-
         })
         .catch(err =>{
             console.log(err);
@@ -39,14 +33,17 @@ app.get("/db", (req, res, next) => {
 });
 
 
-app.post('/db',(req, res, next) =>{
+app.post('/db',(req, res) =>{
+    //console.log("Das hier ist ein gigantisch grosser satz, dami wir den auch richtig shene können");
+    //console.log(req);
     const medications = new Medication({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         description: req.body.description,
         number: req.body.number,
-    })
-    medications.save().then(result => {
+
+})
+    medications.save().then((result )=> {
         console.log(result);
     })
         .catch(err =>console.log(err));
@@ -56,7 +53,7 @@ app.post('/db',(req, res, next) =>{
     });
 });
 
-app.get("/db", (req, res, next) => {
+app.get("/db1", (req, res) => {
     const id = req.params.medicationId;
     Medication.findById(id)
         .exec()
@@ -75,4 +72,4 @@ app.get("/db", (req, res, next) => {
 });
 
 console.log("Hello World, die App ist auf 80")
- app.listen(80);
+app.listen(80);

@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Connect to MongoDB
-mongoose
+/*mongoose
     .connect(
         'mongodb://user_db/test',{ useNewUrlParser: true,useUnifiedTopology: true}
     )
     .then(() => console.log('MongoDB connected '))
-    .catch(err => console.log(err));
+    .catch(err => console.log(err));*/
 
 app.get('/', (req, res) => {
     res.send('Hello World, it works (at least on my machine)')
