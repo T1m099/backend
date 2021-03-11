@@ -1,3 +1,6 @@
+//the single purpose of this file is to generate the key pair for the signing
+//and verification of the JWTs --> if the keys arent in this directory, or in the jwt directory, run this once
+
 const { generateKeyPairSync } = require('crypto');
 const fs = require('fs')
 const { publicKey, privateKey } = generateKeyPairSync('rsa', {
