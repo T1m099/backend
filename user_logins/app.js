@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const login = require('./routes/login');
+const register = require('./routes/register');
 
 //build the app
 const app = express();
@@ -8,8 +9,8 @@ const app = express();
 
 //init app
 app.use(express.json({type: 'application/json'}));
-app.use('./routes/login');
-app.use('./routes/register');
+app.use('/login', login);
+app.use('/register', register);
 
 //connect to DB
 mongoose
