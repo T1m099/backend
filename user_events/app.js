@@ -12,7 +12,7 @@ app.use(express.json());
 
 
 app.get('/', passport.authenticate('jwt',{session: false}), (req, res) => {
-    res.send('Hello World, it works (at least on my machine)')
+    res.send('Hello World, it works (at least on my machine)');
 });
 
 console.log("Hello World, die App ist auf 80");
