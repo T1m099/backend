@@ -13,7 +13,7 @@ services:
     command:
       #- --log.level=DEBUG
       - "--entrypoints.web.address=:80"
-#      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.address=:443"
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
