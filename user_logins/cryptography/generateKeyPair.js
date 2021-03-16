@@ -2,7 +2,8 @@
 //and verification of the JWTs --> if the keys arent in this directory, or in the jwt directory, run this once
 
 const { generateKeyPairSync } = require('crypto');
-const fs = require('fs')
+const fs = require('fs');
+require('dotenv').config()
 const { publicKey, privateKey } = generateKeyPairSync('rsa', {
     modulusLength: 4096,
     publicKeyEncoding: {
@@ -13,7 +14,7 @@ const { publicKey, privateKey } = generateKeyPairSync('rsa', {
         type: 'pkcs8',
         format: 'pem',
         cipher: 'aes-256-cbc',
-        passphrase: 'sptssdf_sdf.89rfj9f9+3ijr92r9sdfvvsdgREGGEDG'
+        passphrase: process.env.PRIV_KEY_PASSPHRASE
     }
 });
 

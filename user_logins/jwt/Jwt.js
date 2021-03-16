@@ -3,6 +3,7 @@ const fs = require('fs');
 const jsonwebtoken = require("jsonwebtoken");
 const path = require('path')
 
+
 const pathToKey = path.join(__dirname, '/priv.pem');
 const PRIV_KEY = fs.readFileSync(pathToKey, 'utf8')
 
@@ -17,7 +18,7 @@ function issueJWT(user){
         iat: Date.now()
     };
 
-    const signedToken = jsonwebtoken.sign(payload,{key: PRIV_KEY, passphrase: 'sptssdf_sdf.89rfj9f9+3ijr92r9sdfvvsdgREGGEDG'}, {expiresIn: expiresIn, algorithm: 'RS256'})
+    const signedToken = jsonwebtoken.sign(payload,{key: PRIV_KEY, passphrase: process.env.PRIV_KEY_PASSPHRASE}, {expiresIn: expiresIn, algorithm: 'RS256'})
 
     return {
         token: "Bearer " + signedToken,
