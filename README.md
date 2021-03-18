@@ -30,7 +30,7 @@ If you just want to test the application, you can skip this step and just start 
 3. mode `priv.pem` into the directory `/user_logins/jwt` replace the already existing file
 
 ##Start the application
-you can now start the application by running `docker-compose up -d --build`
+you can now start the application by running `docker-compose up -d --build --remove-orphans`
 
 ##How it works
 * **Register a User:**

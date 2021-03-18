@@ -13,7 +13,7 @@ services:
     command:
       #- --log.level=DEBUG
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
+  #    - "--entrypoints.websecure.address=:443"
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
@@ -26,7 +26,7 @@ services:
     ports:
       - "80:80"
 #      - "443:443"
-      #ebabled die Browser Oberfläche zusammen mit api insecure= true
+      #enabled die Browser Oberfläche zusammen mit api insecure= true
       - "8080:8080"
     volumes:
       #Volumes are necessary for the nodemon integration -> no rebuilding necessary

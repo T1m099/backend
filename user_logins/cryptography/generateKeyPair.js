@@ -18,6 +18,5 @@ const { publicKey, privateKey } = generateKeyPairSync('rsa', {
     }
 });
 
-console.log(__dirname)
 fs.writeFileSync(__dirname + '/pub.pem', publicKey);
 fs.writeFileSync(__dirname + '/priv.pem', privateKey);
