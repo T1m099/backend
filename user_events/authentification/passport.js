@@ -30,6 +30,7 @@ const strategy = new JwtStrategy(options, (jwt_payload, done) => {
 
         axios.post('http://user_logins/getUser', data)
             .then((res) => {
+                console.log(res);
                 if (res.data === 'No user found') {
                     return done(null, false, {message: 'the user id could not be found in the Database. Please renew your token or register'});
                 } else {

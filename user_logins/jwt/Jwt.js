@@ -10,7 +10,7 @@ const PRIV_KEY = fs.readFileSync(pathToKey, 'utf8')
 
 function issueJWT(user){
     const _id = user._id;
-    const expiresIn = '3m';
+    const expiresIn = '1h';
 
     const payload = {
         sub: _id,

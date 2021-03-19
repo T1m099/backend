@@ -3,6 +3,7 @@ version: "3.9"
 networks:
   traefik-network: {}
   user-auth: {}
+  user-events: {}
 
 services:
 
@@ -59,6 +60,7 @@ services:
       - ./user_events:/app
     networks:
       - traefik-network
+      - user-events
 
 
   user_db:
@@ -66,6 +68,12 @@ services:
     container_name: user_db
     networks:
       - user-auth
+
+  user_events_db:
+    image: mongo:latest
+    container_name: user_events_db
+    networks:
+      - user-events
 
   user_logins:
     build: ./user_logins
