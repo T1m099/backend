@@ -1,4 +1,3 @@
-const express = require('express');
 const mongoose = require('mongoose');
 
 
@@ -6,10 +5,16 @@ const {Schema} = mongoose;
 
 const MedicationSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     description: String,
     //unit: Decimal128,
-    number: Number
+    number: {
+        type: Number,
+        required: true
+    }
     //UID:
 });
 

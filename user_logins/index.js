@@ -10,6 +10,10 @@ const app = express();
     .then(() => console.log('MongoDB connected '))
     .catch(err => console.log(err));*/
 
+//default node.js implementation of mongoose
+mongoose.Promise = global.Promise;
+
+
 app.get('/', (req, res) => {
     res.send('Hello World, it works (at least on my machine)')
 });
