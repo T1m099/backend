@@ -48,12 +48,52 @@ you can now start the application by running `docker-compose up -d --build --rem
     Please set the value of the token as the `Authorization`-Header when accessing a secured route
     
 * **Renew a token that has expired:**
-    * if you already have a user, an only need a new token, please use the route `http://test.localhost/login`
+    * if you already have a user, an only need a new token, please POST to the route `http://test.localhost/login`
     * just include the same body as in the register-route. (You don't need the name, since the user is searched by his e-mail)
     * you will get the same response as you would get from the register-route
+  <br/><br/>
+     * for now, tokens expires after an hour  
+      
     
-* **Use a dummy-route to test the token:**
-    * if you want to test the received token, you can send a request to `http://tester.localhost`
-    * use the token in the authorization-header of the request
-    * since this is a dummy-route, you don't need any content in the body
-    *the answer will just be a "Hello World" message 
+* **Working Routes:**
+    * you can make a calendar entry by POSTing to `http://tester.localhost/calendar/entry`
+    * remember to set the Token in the Authorization header
+    * in the body as JSON the following variables can be submitted for now:
+      ```
+        start_time: {
+        type: Date,
+        required: true
+        },
+        end_time: {
+        type: Date,
+        required: true
+        },
+        title: {
+        type: String,
+        required: true
+        },
+        description: {
+        type: String
+        },
+        colour: {
+        type: String,
+        }
+      ```
+    * to retrieve the all the calendar entries send a GET-request to `http://tester.localhost/calendar/entries` <br/>
+      the answer will look like this:
+      ```json
+        [
+          {
+          "_id": "60551370ea650100a680a824",
+          "start_time": "2021-03-19T00:00:00.000Z",
+          "end_time": "2021-03-23T00:00:00.000Z",
+          "title": "not so Important!!!"
+          },
+          {
+          "_id": "605513ee2389db00b4a0bd81",
+          "start_time": "2021-03-19T00:00:00.000Z",
+          "end_time": "2021-03-23T00:00:00.000Z",
+          "title": "a little bit Important!!!"
+          }
+        ]
+      ```
