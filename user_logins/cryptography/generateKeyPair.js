@@ -3,7 +3,9 @@
 
 const { generateKeyPairSync } = require('crypto');
 const fs = require('fs');
-require('dotenv').config()
+const path = require('path')
+const pathToEnv = path.join(__dirname, '/../.env');
+require('dotenv').config({ path: pathToEnv});
 const { publicKey, privateKey } = generateKeyPairSync('rsa', {
     modulusLength: 4096,
     publicKeyEncoding: {

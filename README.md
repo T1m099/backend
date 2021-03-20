@@ -19,15 +19,14 @@ The mongo connection string ist okay and doesn't need to be changed if no change
 ##Generating a new key pair for JWT validation
 Before the App is used in a production environment, a new public-private needs to be generated, since the ones that are already in, are publicly available on GitHub 
 <br/>
-If you just want to test the application, you can skip this step and just start the application
-
-1. run the `generateKeyPai.js` file
+If you just want to test the application, you can skip this step and just start the application<br/>
+1. run the `generateKeyPair.js` file
     1. go into the terminal and navigate to the directory `/user_logins/cryptography`
     2. run the file with `node generateKeyPair`
     3. you should now have two files `priv.pem` and `pub.pem` in this directory
    
 2. move `priv.pem` into the directory `/user_logins/jwt` and replace the already existing file
-3. mode `priv.pem` into the directory `/user_logins/jwt` replace the already existing file
+3. mode `pub.pem` into the directory `/user_events/authentification` replace the already existing file
 
 ##Start the application
 you can now start the application by running `docker-compose up -d --build --remove-orphans`
