@@ -56,28 +56,28 @@ you can now start the application by running `docker-compose up -d --build --rem
     
 * **Working Routes:**
     * you can make a calendar entry by POSTing to `http://tester.localhost/calendar/entry`
-    * remember to set the Token in the Authorization header
-    * in the body as JSON the following variables can be submitted for now:
-      ```
-        start_time: {
-        type: Date,
-        required: true
-        },
-        end_time: {
-        type: Date,
-        required: true
-        },
-        title: {
-        type: String,
-        required: true
-        },
-        description: {
-        type: String
-        },
-        colour: {
-        type: String,
-        }
-      ```
+        * remember to set the Token in the Authorization header
+        * in the body as JSON the following variables can be submitted for now:
+          ```
+            start_time: {
+            type: Date,
+            required: true
+            },
+            end_time: {
+            type: Date,
+            required: true
+            },
+            title: {
+            type: String,
+            required: true
+            },
+            description: {
+            type: String
+            },
+            colour: {
+            type: String,
+            }
+          ```
     * to retrieve the all the calendar entries send a GET-request to `http://tester.localhost/calendar/entries` <br/>
       the response will look like this:
       ```json
@@ -96,3 +96,6 @@ you can now start the application by running `docker-compose up -d --build --rem
           }
         ]
       ```
+      
+    * refresh token: Post `http://test.localhost/refresh`
+      * put the mail and the hashed password, that is in the response body of the routes /register, /login, /refresh

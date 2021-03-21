@@ -22,7 +22,6 @@ async function validateHash(hash, mail) {
         .catch((err) => {
             console.log(err);
         })
-    console.log(user)
     return user.hash === hash;
 }
 
