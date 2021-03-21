@@ -16,7 +16,11 @@ router.post('/', function (req, res){
 
             if(pwIsValid){
                 const jwtToken = jwt.issueJWT(user);
-                res.status(200).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn});
+                res.status(200).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn,
+                    user: {
+                        mail: user.mail,
+                        password: user.hash
+                    }});
             }
             else{
                 res.status(401).json({success: false, msg: "Wrong password has been entered"});
@@ -24,6 +28,7 @@ router.post('/', function (req, res){
         })
         .catch((err)=>{
             console.log(err);
+            res.status(500).json("Internal Error");
         });
 });
 

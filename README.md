@@ -79,7 +79,7 @@ you can now start the application by running `docker-compose up -d --build --rem
         }
       ```
     * to retrieve the all the calendar entries send a GET-request to `http://tester.localhost/calendar/entries` <br/>
-      the answer will look like this:
+      the response will look like this:
       ```json
         [
           {

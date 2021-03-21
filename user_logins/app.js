@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const login = require('./routes/login');
 const register = require('./routes/register');
 const getUser = require('./routes/getUser');
+const refresh = require('./routes/refresh');
 require('dotenv').config();
 
 
@@ -14,6 +15,7 @@ app.use(express.json({type: 'application/json'}));
 app.use('/login', login);
 app.use('/register', register);
 app.use('/getUser', getUser);
+app.use('/refresh', refresh);
 
 
 
@@ -29,3 +31,6 @@ mongoose
 //für die Keys dort neu generiert werden
 //2 login endpoints, die mit den username und passwort, bzw. den hash akzeptiert
 app.listen(80);
+
+//hash vom Pw mitgeben und dann eine Schnittstelle zum refreshen mit dem Hash
+//

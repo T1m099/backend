@@ -28,7 +28,6 @@ router.get('/entries', passport.authenticate('jwt',{session: false}), (req, res)
                     }
                 })
             }
-            console.log(docs);
             res.status(201).json(docs);
         })
         .catch(err => {
@@ -40,7 +39,6 @@ router.get('/entries', passport.authenticate('jwt',{session: false}), (req, res)
 });
 
 router.post('/entry', passport.authenticate('jwt',{session: false}), (req, res) => {
-    console.log(req.user);
     const calendar = new Calendar({
         _id: new mongoose.Types.ObjectId(),
         start_time: req.body.start_time,
