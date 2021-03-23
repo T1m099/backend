@@ -4,7 +4,8 @@ const User = require('../models/user');
 
 function genPassHash(password){
     let salt = crypto.randomBytes(32).toString('hex');
-    let hash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
+    let pepperedPw = password + process.env.PEPPER;
+    let hash = crypto.pbkdf2Sync(pepperedPw, salt, 100000, 64, 'sha512').toString('hex');
 
     return {
         salt: salt,
@@ -13,7 +14,8 @@ function genPassHash(password){
 }
 
 function validatePw(password, hash, salt){
- const hashToVerify = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
+ let pepperedPw = password + process.env.PEPPER;
+ const hashToVerify = crypto.pbkdf2Sync(pepperedPw, salt, 100000, 64, 'sha512').toString('hex');
  return hash === hashToVerify;
 }
 
