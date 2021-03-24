@@ -77,8 +77,57 @@ router.post('/', passport.authenticate('jwt',{session: false}), (req, res) => {
                 }
             });
         })
-        .catch(err => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({msg: "Probably a required attribute missing", error: err});
+        });
 })
+
+
+router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+    if(req.body._id != null){
+        EventTypes.findOneAndDelete({_id: req.body._id}, function (err) {
+            if (err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json("Successful deletion");
+            }
+        });
+    }
+    else{
+        res.status(400).json("Could not find attribute _id in body");
+    }
+});
+
+
+router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+    if (req.body._id != null) {
+        const eventType = new EventTypes({
+            type: req.body.type,
+            markingColor: req.body.markingColor,
+            title: req.body.title,
+            notes: req.body.notes,
+            start: req.body.start,
+            end: req.body.end,
+            reminders: req.body.reminders,
+            disease: req.body.disease,
+            symptoms: req.body.symptoms,
+            mood: req.body.mood,
+            tracking: req.body.tracking,
+        })
+
+        EventTypes.findOneAndUpdate({_id: req.body._id}, eventType, {new: true}, function (err, result) {
+            if (err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json(result);
+            }
+        });
+    } else {
+        res.status(400).json("Could not find attribute _id in body");
+    }
+});
+
 
 module.exports = router
 

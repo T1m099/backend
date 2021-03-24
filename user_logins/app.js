@@ -31,6 +31,5 @@ mongoose
 //für die Keys dort neu generiert werden
 //2 login endpoints, die mit den username und passwort, bzw. den hash akzeptiert
 app.listen(80);
-
+console.log("The app is running")
 //hash vom Pw mitgeben und dann eine Schnittstelle zum refreshen mit dem Hash
-//

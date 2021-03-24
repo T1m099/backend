@@ -34,15 +34,5 @@ app.use('/settings', settings);
 app.use('/medications', medications);
 
 
-
-
-
-
-//secured test route
-app.get('/', passport.authenticate('jwt',{session: false}), (req, res, next) => {
-    res.send('Hello World, it works (at least on my machine)');
-});
-
-
 console.log("Hello World, die App ist auf 80");
  app.listen(80);

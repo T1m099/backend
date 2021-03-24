@@ -12,7 +12,7 @@ The following Variables have to be inserted:
 <br/>
 * `PRIV_KEY_PASSPHRASE=insert_your_passphrase`
 * `MONGO_DB=mongodb://user_db`
-* `MONGO_DB=some_random_chars`
+* `PEPPER=some_random_chars`
 
 The mongo connection string ist okay and doesn't need to be changed if no changes in the code are implemented.
 <br/>
@@ -20,14 +20,14 @@ The mongo connection string ist okay and doesn't need to be changed if no change
 ##Generating a new key pair for JWT validation
 Before the App is used in a production environment, a new public-private needs to be generated, since the ones that are already in, are publicly available on GitHub 
 <br/>
-If you just want to test the application, you can skip this step and just start the application<br/>
-1. run the `generateKeyPair.js` file
+1. Install the dependencies for that file   
+2. run the `generateKeyPair.js` file
     1. go into the terminal and navigate to the directory `/user_logins/cryptography`
     2. run the file with `node generateKeyPair`
     3. you should now have two files `priv.pem` and `pub.pem` in this directory
    
-2. move `priv.pem` into the directory `/user_logins/jwt` and replace the already existing file
-3. mode `pub.pem` into the directory `/user_events/authentification` replace the already existing file
+3. move `priv.pem` into the directory `/user_logins/jwt` and replace the already existing file
+4. mode `pub.pem` into the directory `/user_events/authentification` replace the already existing file
 
 ##Start the application
 you can now start the application by running `docker-compose up -d --build --remove-orphans`
@@ -55,7 +55,45 @@ you can now start the application by running `docker-compose up -d --build --rem
      * for now, tokens expires after an hour  
       
     
-* **Working Routes:**
+* **Working Routes:** (all of them are protected and need JWT for access)
+  * **Events**
+    *  **GET** `http://tester.localhost/event`
+        * returns all events for the user
+    * **POST** `http://tester.localhost/event`
+        * create a new event
+    * **PUT** `http://tester.localhost/event`
+        * update a calendar entry --> give the `_id` in the body
+    * **DELETE** `http://tester.localhost/event`
+        * delete a calendar entry --> give the `_id` in the body
+  * **Settings** (stores the values the user wants to track that can be configured in the settings)
+    * **GET** `http://tester.localhost/settings`
+        * returns the array `user_settings` with the tracked values per user
+    * **POST** `http://tester.localhost/settings`
+        * set the settings for the user on creation (for the first time)
+    * **PUT** `http://tester.localhost/settings`
+        * update the `user_settings`
+    * **DELETE** `http://tester.localhost/settings`
+        * delete the settings for that user --> no request-body required
+  * **Medications**
+    * **GET** `http://tester.localhost/medications`
+        * get the medications for a user
+    * **POST** `http://tester.localhost/medications`
+        * create new medication 
+    * **DELETE** `http://tester.localhost/medications`
+      * delete the settings for that user --> put the `_id` in the request-body
+    * **PUT** `http://tester.localhost/settings`
+      * update the specific medication --> supply _id in the request-body
+      * the title and the user_id are not modifiable --> please delete the old one and create a new one if this is to be changed 
+    
+Change put in event types and medication because of the id when updating (does it work like that)
+@fabienne --> testen
+
+
+
+
+
+
+
     * you can make a calendar entry by POSTing to `http://tester.localhost/calendar/entry`
         * remember to set the Token in the Authorization header
         * in the body as JSON the following variables can be submitted for now:
