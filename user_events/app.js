@@ -2,7 +2,11 @@ const express = require('express');
 const passport = require('passport');
 const mongoose = require('mongoose');
 
-const calendar = require('./routes/calendar');
+const eventTypes = require('./routes/eventTypes');
+const settings = require('./routes/settings');
+const medications = require('./routes/medications');
+
+
 
 
 //Initialize App
@@ -25,7 +29,10 @@ mongoose
 
 //routes
 app.use(express.json({type: "application/json"}));
-app.use('/calendar', calendar);
+app.use('/event', eventTypes);
+app.use('/settings', settings);
+app.use('/medications', medications);
+
 
 
 

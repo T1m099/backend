@@ -32,7 +32,7 @@ router.post('/', function (req, res, next){
                 }});
         })
         .catch((err) => {
-            res.status(500).json("User already exists");
+            res.status(409).json("User already exists");
             next();
         });
 });

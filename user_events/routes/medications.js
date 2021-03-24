@@ -1,11 +1,13 @@
 const express = require('express');
 const Medication = require('../models/medications');
-const mongoose = require('mongoose');
+const passport = require('passport');
+
 const router = express.Router();
 
-router.get('/medication/all', (req, res) => {
-    Medication.find()
-        .select("_id name description number")
+
+router.get('/',passport.authenticate('jwt',{session: false}), (req, res) => {
+    Medication.find({user_id: req.user._id})
+        .select("_id title description unit quantity reminders")
         .exec()
         .then(docs => {
             const response = {
@@ -13,18 +15,15 @@ router.get('/medication/all', (req, res) => {
                 courses: docs.map(doc => {
                     return {
                         _id: doc._id,
-                        name: doc.name,
+                        title: doc.title,
                         description: doc.description,
-                        number: doc.number,
-                        request: {
-                            type: 'GET',
-                            url: '' + doc._id
-                        }
+                        unit: doc.unit,
+                        quantity: doc.quantity,
+                        reminders: doc.reminders
                     }
                 })
             }
-            console.log(docs);
-            res.status(200).json(docs);
+            res.status(200).json(response);
         })
         .catch(err => {
             console.log(err);
@@ -35,49 +34,36 @@ router.get('/medication/all', (req, res) => {
 });
 
 
-router.post('/medication', (req, res) => {
+router.post('/', passport.authenticate('jwt',{session: false}),(req, res) => {
 
     const medications = new Medication({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
+        _id: req.user._id + req.body.title,
+        title: req.body.title,
         description: req.body.description,
-        number: req.body.number,
+        unit: req.body.unit,
+        quantity: req.body.quantity,
+        reminders: req.body.reminders,
+        user_id: req.user._id
 
     })
     medications.save().then((result) => {
         console.log(result)
-            .catch(err => console.log(err));
+
         res.status(201).json({
             message: 'Entry was successfully',
             createdMedications: {
-                name: result.name,
+                title: result.title,
                 description: result.description,
-                number: result.number,
-                request: {
-                    type: 'GET',
-                    url: ''.result._id
-                }
+                unit: result.unit,
+                quantity: result.quantity,
+                reminders: result.reminders
             }
         });
-    });
-});
-router.get("/medication/id", (req, res) => {
-    const id = req.params.medicationId;
-    Medication.findById(id)
-        .exec()
-        .then(doc => {
-            console.log("From Database", doc);
-            if (doc) {
-                res.status(200).json({doc});
-            } else {
-                res.status(404).json({message: 'No valid entry found for provides ID'});
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err});
-        });
-});
 
+    }).catch((err) => {
+            console.log(err);
+            res.status(409).json("Entity already exists");
+        });
+});
 
 module.exports = router;
