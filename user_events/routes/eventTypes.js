@@ -86,7 +86,7 @@ router.post('/', passport.authenticate('jwt',{session: false}), (req, res) => {
 
 router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if(req.body._id != null){
-        EventTypes.findOneAndDelete({_id: req.body._id}, function (err) {
+        EventTypes.findOneAndDelete({_id: req.body._id}, {useFindAndModify: true},function (err) {
             if (err) {
                 res.status(400).json(err);
             } else {
@@ -116,7 +116,7 @@ router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
             tracking: req.body.tracking,
         })
 
-        EventTypes.findOneAndUpdate({_id: req.body._id}, eventType, {new: true}, function (err, result) {
+        EventTypes.findOneAndUpdate({_id: req.body._id}, eventType, {new: true, useFindAndModify: true}, function (err, result) {
             if (err) {
                 res.status(400).json(err);
             } else {

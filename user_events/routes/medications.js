@@ -70,7 +70,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
 router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if(req.body._id != null){
-        Medication.findOneAndDelete({_id: req.body._id}, function (err) {
+        Medication.findOneAndDelete({_id: req.body._id}, {useFindAndModify: true}, function (err) {
             if (err) {
                 res.status(400).json(err);
             } else {
@@ -94,7 +94,7 @@ router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
         })
 
 
-        Medication.findOneAndUpdate({_id: req.body._id}, medication, {new: true}, function (err, result) {
+        Medication.findOneAndUpdate({_id: req.body._id}, medication, {new: true, useFindAndModify: true}, function (err, result) {
             if (err) {
                 res.status(400).json(err);
             } else {

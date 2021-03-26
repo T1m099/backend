@@ -58,7 +58,7 @@ router.post('/', passport.authenticate('jwt',{session: false}),(req, res) => {
 
 router.put('/', passport.authenticate('jwt',{session: false}), (req, res) =>{
     if(req.body.user_settings!=null) {
-        Settings.findOneAndUpdate({user_id: req.user._id}, {user_settings: req.body.user_settings}, {new: true}, function (err, result) {
+        Settings.findOneAndUpdate({user_id: req.user._id}, {user_settings: req.body.user_settings}, {new: true, useFindAndModify: true}, function (err, result) {
                 if (err) {
                     res.status(400).json(err);
                 } else {
@@ -71,7 +71,7 @@ router.put('/', passport.authenticate('jwt',{session: false}), (req, res) =>{
 });
 
 router.delete('/', passport.authenticate('jwt',{session: false}), (req, res) =>{
-        Settings.findOneAndDelete({user_id: req.user._id}, function (err) {
+        Settings.findOneAndDelete({user_id: req.user._id}, {useFindAndModify: true}, function (err) {
                 if (err) {
                     res.status(400).json(err);
                 } else {

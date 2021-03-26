@@ -11,7 +11,7 @@ router.post('/', async function (req, res){
         res.send(user);
     }
     else{
-        res.send('No user found');
+        res.status(404).json('No user found');
     }
 });
 
