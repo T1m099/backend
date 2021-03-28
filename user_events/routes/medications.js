@@ -37,13 +37,9 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     const medication = new Medication({
-        _id: req.user._id + req.body.title,
-        title: req.body.title,
-        description: req.body.description,
-        unit: req.body.unit,
-        quantity: req.body.quantity,
-        reminders: req.body.reminders,
-        user_id: req.user._id
+        uniquenessCheck: req.user._id + req.body.title,
+        user_id: req.user._id,
+        ...req.body
 
     })
     medication.save().then((result) => {

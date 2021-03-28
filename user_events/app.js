@@ -3,7 +3,6 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 
 const eventTypes = require('./routes/eventTypes');
-const settings = require('./routes/settings');
 const medications = require('./routes/medications');
 
 
@@ -30,7 +29,6 @@ mongoose
 //routes
 app.use(express.json({type: "application/json"}));
 app.use('/event', eventTypes);
-app.use('/settings', settings);
 app.use('/medications', medications);
 
 
