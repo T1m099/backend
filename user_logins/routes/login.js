@@ -12,18 +12,16 @@ router.post('/', function (req, res){
             if(!user) {
                 res.status(404).json({success: false, msg: "Could not find any user with that mail"})
             }
-            const pwIsValid = encryptUtils.validatePw(req.body.password, user.hash, user.salt);
-
-            if(pwIsValid){
-                const jwtToken = jwt.issueJWT(user);
-                res.status(200).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn,
-                    user: {
-                        mail: user.mail,
-                        password: user.hash
-                    }});
-            }
             else{
-                res.status(401).json({success: false, msg: "Wrong password has been entered"});
+                const pwIsValid = encryptUtils.validatePw(req.body.password, user.hash, user.salt);
+
+                if(pwIsValid){
+                    const jwtToken = jwt.issueJWT(user);
+                    res.status(200).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn});
+                }
+                else{
+                    res.status(401).json({success: false, msg: "Wrong password has been entered"});
+                }
             }
         })
         .catch((err)=>{

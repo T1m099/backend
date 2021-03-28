@@ -1,0 +1,8 @@
+tls:
+  stores:
+    default: {}
+  certificates:
+    - certFile: /etc/certs/server-cert.crt
+      keyFile: /etc/certs/priv.pem
+      stores:
+        - default
