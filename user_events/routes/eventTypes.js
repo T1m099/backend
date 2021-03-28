@@ -42,23 +42,11 @@ router.get('/', passport.authenticate('jwt',{session: false}), (req, res) => {
 
 router.post('/', passport.authenticate('jwt',{session: false}), (req, res) => {
     const eventType = new EventTypes({
-        _id: new mongoose.Types.ObjectId(),
-        type: req.body.type,
-        markingColor: req.body.markingColor,
-        title: req.body.title,
-        notes: req.body.notes,
-        start: req.body.start,
-        end: req.body.end,
-        reminders: req.body.reminders,
-        disease: req.body.disease,
-        symptoms: req.body.symptoms,
-        mood: req.body.mood,
-        tracking: req.body.tracking,
+       ...req.body,
         user_id: req.user._id
     })
     eventType.save()
         .then((result) => {
-            console.log(result)
             res.status(201).json({
                 message: 'created',
                 createdCalendar: {
@@ -103,17 +91,7 @@ router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) =>
 router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if (req.body._id != null) {
         const eventType = new EventTypes({
-            type: req.body.type,
-            markingColor: req.body.markingColor,
-            title: req.body.title,
-            notes: req.body.notes,
-            start: req.body.start,
-            end: req.body.end,
-            reminders: req.body.reminders,
-            disease: req.body.disease,
-            symptoms: req.body.symptoms,
-            mood: req.body.mood,
-            tracking: req.body.tracking,
+            ...req.body
         })
 
         EventTypes.findOneAndUpdate({_id: req.body._id}, eventType, {new: true, useFindAndModify: true}, function (err, result) {

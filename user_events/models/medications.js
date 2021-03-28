@@ -4,8 +4,11 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const MedicationSchema = new Schema({
-    _id: {
-        type:String,
+
+    uniquenessCheck:{
+        type: String,
+        required: true,
+        unique: true
     },
 
     title: {

@@ -4,8 +4,6 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose;
 
 const EventTypeSchema = new Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-
     type:{
       type: String,
       required: true
@@ -43,7 +41,7 @@ const EventTypeSchema = new Schema({
 
     mood: String,
 
-    tracking:[],
+    tracking: Object,
 
     user_id:{
         type: String,

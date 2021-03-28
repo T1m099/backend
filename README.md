@@ -13,6 +13,8 @@ The following Variables have to be inserted:
 * `PRIV_KEY_PASSPHRASE=insert_your_passphrase`
 * `MONGO_DB=mongodb://user_db`
 * `PEPPER=some_random_chars`
+* `ENCRYPT_KEY=blablabla`
+* `ENCRYPT_SALT=blablabla`
 
 The mongo connection string ist okay and doesn't need to be changed if no changes in the code are implemented.
 <br/>
