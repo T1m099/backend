@@ -6,8 +6,6 @@ const {Schema} = mongoose;
 const MedicationSchema = new Schema({
     _id: {
         type:String,
-        unique: true,
-        required: true
     },
 
     title: {

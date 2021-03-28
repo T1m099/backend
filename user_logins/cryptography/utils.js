@@ -27,6 +27,13 @@ async function validateHash(hash, mail) {
     return user.hash === hash;
 }
 
+
+function encryptData (text){
+    const initVector = crypto.randomBytes(16);
+    const salt = crypto.randomBytes(20);
+    const key = crypto.pbkdf2Sync(process.env., salt, 100000, 64, 'sha256').toString('hex');
+}
+
 module.exports.genPassHash = genPassHash;
 module.exports.validatePw = validatePw;
 module.exports.validateHash = validateHash;

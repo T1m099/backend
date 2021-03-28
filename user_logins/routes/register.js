@@ -26,11 +26,7 @@ router.post('/', function (req, res, next){
                 const jwtToken = jwt.issueJWT(result);
                 console.log('User created');
                 //respond with a token and a succcess message
-                res.status(201).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn,
-                    user: {
-                        mail: result.mail,
-                        password: result.hash
-                    }});
+                res.status(201).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn});
             })
             .catch((err) => {
                 res.status(409).json("User already exists");
