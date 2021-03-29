@@ -17,7 +17,10 @@ router.post('/', function (req, res){
 
                 if(pwIsValid){
                     const jwtToken = jwt.issueJWT(user);
-                    res.status(200).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn});
+                    res.status(200).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn, user:{
+                        username: user.name,
+                            email: user.mail
+                        }});
                 }
                 else{
                     res.status(401).json({success: false, msg: "Wrong password has been entered"});

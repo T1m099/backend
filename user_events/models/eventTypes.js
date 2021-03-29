@@ -24,7 +24,7 @@ const EventTypeSchema = new Schema({
         required: true
     },
 
-    start:{
+    time:{
         type: Date,
         required: true
     },

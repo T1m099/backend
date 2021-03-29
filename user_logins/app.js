@@ -21,7 +21,7 @@ app.use('/refresh', refresh);
 //connect to DB
 mongoose
     .connect(
-        "mongodb://user_db",{ useNewUrlParser: true,useUnifiedTopology: true}
+        "mongodb://user_db",{ useNewUrlParser: true, useUnifiedTopology: true}
     )
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
