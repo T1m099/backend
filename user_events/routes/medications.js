@@ -66,7 +66,7 @@ router.delete(
 					if (err) {
 						res.status(400).json(err);
 					} else {
-						res.status(200).json('Successful deletion');
+						res.status(200).json({msg: 'Successful deletion', id: req.body._id});
 					}
 				}
 			);
