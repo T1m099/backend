@@ -1,5 +1,5 @@
 const express = require('express');
-const EventTypes = require('../models/eventTypes');
+const Events = require('../models/events');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
@@ -7,17 +7,16 @@ const passport = require('passport');
 const router = express.Router();
 
 router.get('/', passport.authenticate('jwt',{session: false}), (req, res) => {
-    EventTypes.find({user_id: req.user._id})
-        .select("_id type markingColor title notes start end reminders disease symptoms mood tracking")
-        .exec()
+    Events.find({user_id: req.user._id})
         .then(docs => {
             const response = {
-                count: docs.length,
-                calendar: docs.map(doc => {
-                    const {user_id, ...rest} = {doc: []};
-                    return {...rest};
+                events: docs.map(doc => {
+                    const {user_id,__v,_id:id,...rest} = doc.toObject()
+                    return {
+                        id,...rest
+                    }
                 })
-            };
+            }
             res.status(201).json(response);
         })
         .catch(err => {
@@ -29,16 +28,14 @@ router.get('/', passport.authenticate('jwt',{session: false}), (req, res) => {
 });
 
 router.post('/', passport.authenticate('jwt',{session: false}), (req, res) => {
-    const eventType = new EventTypes({
-       ...req.body,
+    const eventType = new Events({
+        ...req.body,
         user_id: req.user._id
     })
     eventType.save()
         .then((result) => {
-            const {user_id, ...rest} = result
-            res.status(201).json({
-                    ...rest
-            });
+            const {user_id,__v,_id:id,...rest} = result.toObject()
+            res.status(201).json({id,...rest});
         })
         .catch((err) => {
             console.log(err);
@@ -49,7 +46,7 @@ router.post('/', passport.authenticate('jwt',{session: false}), (req, res) => {
 
 router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if(req.body._id != null){
-        EventTypes.findOneAndDelete({_id: req.body._id}, {useFindAndModify: true},function (err) {
+        Events.findOneAndDelete({_id: req.body.id}, {useFindAndModify: true},function (err) {
             if (err) {
                 res.status(400).json(err);
             } else {
@@ -64,17 +61,16 @@ router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) =>
 
 
 router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-    if (req.body._id != null) {
-        const eventType = new EventTypes({
+    if (req.body.id != null) {
+        const eventType = new Events({
             ...req.body
         })
 
-        EventTypes.findOneAndUpdate({_id: req.body._id}, eventType, {new: true, useFindAndModify: true}, function (err, result) {
+        Events.findOneAndUpdate({_id: req.body.id}, eventType, {new: true, useFindAndModify: true}, function (err, result) {
             if (err) {
                 res.status(400).json(err);
             } else {
-                const {user_id, ...rest} = result
-                res.status(200).json(...rest);
+                res.status(200).json(result);
             }
         });
     } else {

@@ -1,49 +1,37 @@
 const mongoose = require('mongoose');
 
-
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const MedicationSchema = new Schema({
+	uniquenessCheck: {
+		type: String,
+		unique: true,
+		required: true,
+	},
 
-    uniquenessCheck:{
-        type: String,
-        required: true,
-        unique: true
-    },
+	title: {
+		type: String,
+		required: true,
+	},
 
-    title: {
-        type: String,
-        required: true
-    },
+	description: String,
 
-    description: String,
+	unit: {
+		type: String,
+		required: true,
+	},
 
-    unit:{
-        type: String,
-        required: true
-    },
+	quantity: {
+		type: Number,
+		required: true,
+	},
 
-    quantity: {
-        type: Number,
-        required: true
-    },
+	reminders: { type: Array },
 
-    reminders:[],
-
-    user_id:{
-        type: String,
-        required:true
-    }
-
+	user_id: {
+		type: String,
+		required: true,
+	},
 });
 
-module.exports = mongoose.model('Medication', MedicationSchema)
-
-
-
-
-
-
-
-
-
+module.exports = mongoose.model('Medication', MedicationSchema);
