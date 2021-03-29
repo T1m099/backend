@@ -10,7 +10,7 @@ router.post('/', function (req, res){
         .then((user) => {
 
             if(!user) {
-                res.status(404).json({success: false, msg: "Could not find any user with that mail"})
+                return res.status(404).json({success: false, msg: "Could not find any user with that mail"})
             }
             const pwIsValid = encryptUtils.validatePw(req.body.password, user.hash, user.salt);
 
