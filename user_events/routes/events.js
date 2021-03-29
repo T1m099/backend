@@ -6,14 +6,14 @@ const passport = require('passport');
 
 const router = express.Router();
 
-router.get('/', passport.authenticate('jwt',{session: false}), (req, res) => {
+router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     Events.find({user_id: req.user._id})
         .then(docs => {
             const response = {
                 events: docs.map(doc => {
-                    const {user_id,__v,_id:id,...rest} = doc.toObject()
+                    const {user_id, __v, _id: id, ...rest} = doc.toObject()
                     return {
-                        id,...rest
+                        id, ...rest
                     }
                 })
             }
@@ -27,15 +27,15 @@ router.get('/', passport.authenticate('jwt',{session: false}), (req, res) => {
         });
 });
 
-router.post('/', passport.authenticate('jwt',{session: false}), (req, res) => {
+router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     const eventType = new Events({
         ...req.body,
         user_id: req.user._id
     })
     eventType.save()
         .then((result) => {
-            const {user_id,__v,_id:id,...rest} = result.toObject()
-            res.status(201).json({id,...rest});
+            const {user_id, __v, _id: id, ...rest} = result.toObject()
+            res.status(201).json({id, ...rest});
         })
         .catch((err) => {
             console.log(err);
@@ -45,16 +45,15 @@ router.post('/', passport.authenticate('jwt',{session: false}), (req, res) => {
 
 
 router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-    if(req.body._id != null){
-        Events.findOneAndDelete({_id: req.body.id}, {useFindAndModify: true},function (err) {
+    if (req.body._id != null) {
+        Events.findOneAndDelete({_id: req.body.id}, {useFindAndModify: true}, function (err) {
             if (err) {
                 res.status(400).json(err);
             } else {
                 res.status(200).json({msg: "Successful deletion", id: req.body._id});
             }
         });
-    }
-    else{
+    } else {
         res.status(400).json("Could not find attribute _id in body");
     }
 });
@@ -66,11 +65,15 @@ router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
             ...req.body
         })
 
-        Events.findOneAndUpdate({_id: req.body.id}, eventType, {new: true, useFindAndModify: true}, function (err, result) {
+        Events.findOneAndUpdate({_id: req.body.id}, eventType, {
+            new: true,
+            useFindAndModify: true
+        }, function (err, result) {
             if (err) {
                 res.status(400).json(err);
             } else {
-                res.status(200).json(result);
+                const {__v, user_id, _id: id, ...res} = result;
+                res.status(200).json({id, ...res});
             }
         });
     } else {
