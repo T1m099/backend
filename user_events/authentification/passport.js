@@ -13,7 +13,7 @@ const options = {
     algorithms: ['RS256'],
     ignoreExpiration: false,
     jsonWebTokenOptions: {
-        maxAge: '1d',
+        maxAge: '2d',
 /*        clockTimestamp: Math.round(Date.now()/1000),
         clockTolerance: 0*/
     }

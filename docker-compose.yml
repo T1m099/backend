@@ -15,7 +15,7 @@ services:
       #    - --log.level=DEBUG
       #    - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--api.insecure=true"
+   #   - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.file.directory=/etc/traefik"
@@ -31,7 +31,7 @@ services:
       #    - "80:80"
       - "443:443"
       #enabled die Browser Oberfläche zusammen mit api insecure= true
-      - "8080:8080"
+  #    - "8080:8080"
     volumes:
       #Volumes are necessary for the nodemon integration -> no rebuilding necessary
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
