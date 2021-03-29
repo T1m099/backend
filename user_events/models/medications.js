@@ -22,7 +22,7 @@ const MedicationSchema = new Schema({
     },
 
     quantity: {
-        type: Number,
+        type: String,
         required: true
     },
 

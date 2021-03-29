@@ -40,7 +40,7 @@ const EventTypeSchema = new Schema({
 
     mood: String,
 
-    tracking:Object,
+    trackingItems:Object,
 
     user_id:{
         type: String,

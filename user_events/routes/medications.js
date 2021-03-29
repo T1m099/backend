@@ -12,8 +12,9 @@ router.get(
 			.then(docs => {
 				const response = {
 					medications: docs.map(doc => {
-						const { _id: id, __v, ...rest } = doc.toObject();
+						const { _id: id, __v, uniquenessCheck, user_id,  ...rest } = doc.toObject();
 						return {
+							id,
 							...rest,
 						};
 					}),
@@ -41,7 +42,7 @@ router.post(
 		medication
 			.save()
 			.then(result => {
-				const { user_id, __v, _id: id, ...rest } = result.toObject();
+				const { user_id, uniquenessCheck,  __v, _id: id, ...rest } = result.toObject();
 				res.status(201).json({
 					id,
 					...rest,
@@ -58,7 +59,7 @@ router.delete(
 	'/',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
-		if (req.body._id != null) {
+		if (req.body.id != null) {
 			Medication.findOneAndDelete(
 				{ _id: req.body.id },
 				{ useFindAndModify: true },
@@ -66,7 +67,7 @@ router.delete(
 					if (err) {
 						res.status(400).json(err);
 					} else {
-						res.status(200).json({msg: 'Successful deletion', id: req.body._id});
+						res.status(200).json({msg: 'Successful deletion', id: req.body.id});
 					}
 				}
 			);
@@ -82,20 +83,17 @@ router.put(
 	(req, res) => {
 		if (req.body.id != null) {
 			const { id, ...rest } = req.body;
-			const medication = new Medication({
-				...rest,
-			});
 
 			Medication.findOneAndUpdate(
 				{ _id: id },
-				medication,
+				rest,
 				{ new: true, useFindAndModify: true },
 				function (err, result) {
 					if (err) {
 						res.status(400).json(err);
 					} else {
-						const { __v, user_id, _id: id, ...res } = result;
-						res.status(200).json({ id, ...res });
+						const { __v, user_id, uniquenessCheck, _id: id, ...resp } = result.toObject();
+						res.status(200).json({ id, ...resp});
 					}
 				}
 			);
