@@ -28,11 +28,13 @@ const EventTypeSchema = new Schema({
         required: true
     },
 
-    end: Number,
+    end: {
+        type: Number
+    },
 
     reminders:{type:Array,default:undefined},
 
-    disease: String,
+   disease: String,
 
     symptoms:{type:Array,default:undefined},
 
