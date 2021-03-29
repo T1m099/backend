@@ -14,22 +14,10 @@ router.get('/', passport.authenticate('jwt',{session: false}), (req, res) => {
             const response = {
                 count: docs.length,
                 calendar: docs.map(doc => {
-                    return {
-                        _id: doc._id,
-                        type: doc.type,
-                        markingColor: doc.markingColor,
-                        title: doc.title,
-                        notes: doc.notes,
-                        start: doc.start,
-                        end: doc.end,
-                        reminders: doc.reminders,
-                        disease: doc.disease,
-                        symptoms: doc.symptoms,
-                        mood: doc.mood,
-                        tracking: doc.tracking
-                    }
+                    const {user_id, ...rest} = {doc: []};
+                    return {...rest};
                 })
-            }
+            };
             res.status(201).json(response);
         })
         .catch(err => {
@@ -47,22 +35,9 @@ router.post('/', passport.authenticate('jwt',{session: false}), (req, res) => {
     })
     eventType.save()
         .then((result) => {
+            const {user_id, ...rest} = result
             res.status(201).json({
-                message: 'created',
-                createdCalendar: {
-                    _id: result._id,
-                    type: result.type,
-                    markingColor: result.markingColor,
-                    title: result.title,
-                    notes: result.notes,
-                    start: result.start,
-                    end: result.end,
-                    reminders: result.reminders,
-                    disease: result.disease,
-                    symptoms: result.symptoms,
-                    mood: result.mood,
-                    tracking: result.tracking,
-                }
+                    ...rest
             });
         })
         .catch((err) => {
@@ -98,7 +73,8 @@ router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
             if (err) {
                 res.status(400).json(err);
             } else {
-                res.status(200).json(result);
+                const {user_id, ...rest} = result
+                res.status(200).json(...rest);
             }
         });
     } else {

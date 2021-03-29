@@ -15,8 +15,8 @@ router.post('/', function (req, res, next){
 
 
         const user = new User({
-            name: req.body.name,
-            mail: req.body.mail,
+            name: encryptUtils.encryptData(req.body.name),
+            mail: encryptUtils.encryptData(req.body.mail),
             hash: hash,
             salt: salt
         });

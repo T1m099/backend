@@ -42,7 +42,7 @@ function encryptData (text){
 }
 
 function decryptData (cipher){
-    //create initialization verctor and encryption key
+    //create initialization vector and encryption key
     let split = cipher.split(".")
     let initVector = Buffer.from(split[0], 'hex');
     const key = crypto.pbkdf2Sync("test", "teste3", 100000, 32, 'sha512');
@@ -51,6 +51,7 @@ function decryptData (cipher){
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, initVector);
     let decrypted = decipher.update(split[1], 'hex', 'utf-8');
     decrypted += decipher.final('utf-8');
+    console.log(decrypted);
     return(decrypted);
 }
 
