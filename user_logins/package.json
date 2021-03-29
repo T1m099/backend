@@ -4,7 +4,7 @@
   "description": "Handle authentification and user login --> connect to login db",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "Timo Hätinger",
   "license": "ISC",

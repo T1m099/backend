@@ -8,12 +8,12 @@ networks:
 services:
 
   reverse-proxy:
-    image: traefik:v2.4
-    #build: ./traefik
+    #image: traefik:v2.4
+    build: ./traefik
     container_name: traefik
     command:
-      #- --log.level=DEBUG
-  #    - "--entrypoints.web.address=:80"
+      #    - --log.level=DEBUG
+      #    - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--api.insecure=true"
       - "--providers.docker=true"
@@ -22,13 +22,13 @@ services:
       - "--providers.file.watch=true"
       - "--configFile=./etc/traefik/traefik.yml"
       #HTTP to HTTPS redirect
-#      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-#      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-#      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-#      - "--certificatesresolvers.myresolver.acme.email=wi19002@lehre.dhbw-stuttgart.de"
-#      - "--certificatesresolvers.myresolver.acme.storage=/cert/acme.json"
+    #      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+    #      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+    #      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+    #      - "--certificatesresolvers.myresolver.acme.email=wi19002@lehre.dhbw-stuttgart.de"
+    #      - "--certificatesresolvers.myresolver.acme.storage=/cert/acme.json"
     ports:
-  #    - "80:80"
+      #    - "80:80"
       - "443:443"
       #enabled die Browser Oberfläche zusammen mit api insecure= true
       - "8080:8080"
@@ -38,34 +38,15 @@ services:
       - "./traefik/configuration:/etc/traefik/dynamic/certs-traefik.yaml"
       - "./traefik/configuration/certificates:/etc/certs/"
       #necessary for Lets encrypt
-#      - "./traefik/letsencrypt:/letsencrypt/"
+    #      - "./traefik/letsencrypt:/letsencrypt/"
     networks:
       - traefik-network
     labels:
-#      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
-#      - "traefik.http.routers.http-catchall.entrypoints=web"
-#      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
-#      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      #      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
+      # - "traefik.http.routers.http-catchall.entrypoints=websecure"
+      #    - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+      #     - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.docker.network=traefik-network"
-
-
-  user_events:
-    build: ./user_events
-    container_name: user-events
-    labels:
-      #enable container in traefik
-      - "traefik.enable=true"
-      #route definition
-      - "traefik.http.routers.user_events.rule=Host(`tester.localhost`)"
-      #http redirect
-#      - "traefik.http.routers.user_events.entrypoints=websecure"
-#      - "traefik.http.routers.user_events.tls=true"
-#      - "traefik.http.routers.user_events.tls.certresolver=myresolver"
-    volumes:
-      - ./user_events:/app
-    networks:
-      - traefik-network
-      - user-events
 
 
   user_db:
@@ -85,23 +66,23 @@ services:
     container_name: user-logins
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.user_logins.rule=Host(`test.localhost`)"
+      - "traefik.http.routers.user_logins.rule=Path(`/register`) || Path(`/login`) || Path(`/getUser`) || Path(`/refresh`)"
       #http redirect
-#      - "traefik.http.routers.user_logins.entrypoints=websecure"
-#      - "traefik.http.routers.user_login.tls=true"
-#      - "traefik.http.routers.user_logins.tls.certresolver=myresolver"
+      - "traefik.http.routers.user_logins.entrypoints=websecure"
+      - "traefik.http.routers.user_logins.tls=true"
+    #      - "traefik.http.routers.user_logins.tls.certresolver=myresolver"
     volumes:
       - ./user_logins:/app
     networks:
-      - user-auth
       - traefik-network
+      - user-auth
 
   user_events:
     build: ./user_events
     container_name: user-events
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.user_events.rule=Path(`/event`) || Path(`/settings`) || Path(`/medication`)"
+      - "traefik.http.routers.user_events.rule=Path(`/events`) || Path(`/medications`)"
       #http redirect
       - "traefik.http.routers.user_events.entrypoints=websecure"
       - "traefik.http.routers.user_events.tls=true"

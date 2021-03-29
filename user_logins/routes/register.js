@@ -15,8 +15,8 @@ router.post('/', function (req, res, next){
 
 
         const user = new User({
-            name: encryptUtils.encryptData(req.body.name),
-            mail: encryptUtils.encryptData(req.body.mail),
+            name: req.body.name,
+            mail: req.body.mail,
             hash: hash,
             salt: salt
         });
@@ -29,8 +29,8 @@ router.post('/', function (req, res, next){
                 res.status(201).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn});
             })
             .catch((err) => {
+                console.log(err);
                 res.status(409).json("User already exists");
-                next();
             });
     }
 

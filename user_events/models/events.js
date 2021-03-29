@@ -28,11 +28,6 @@ const EventTypeSchema = new Schema({
         required: true
     },
 
-    start:{
-        type: Date,
-        required: true
-    },
-
     end: {
         type: Number
     },
