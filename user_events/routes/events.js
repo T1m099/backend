@@ -45,7 +45,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
 
 router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-    if (!req.body.id) {
+    if (req.body.id != null) {
         Events.findOneAndDelete({_id: req.body.id}, {useFindAndModify: true}, function (err) {
             if (err) {
                 res.status(400).json(err);
