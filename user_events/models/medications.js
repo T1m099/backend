@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 
-
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const MedicationSchema = new Schema({
-
-    uniquenessCheck:{
-        type: String,
-        required: true,
-        unique: true
+	uniquenessCheck: {
+        type:String,
+        unique: true,
+        required: true
     },
 
     title: {
@@ -28,7 +26,7 @@ const MedicationSchema = new Schema({
         required: true
     },
 
-    reminders:[],
+	reminders: { type: Array },
 
     user_id:{
         type: String,
@@ -37,13 +35,4 @@ const MedicationSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('Medication', MedicationSchema)
-
-
-
-
-
-
-
-
-
+module.exports = mongoose.model('Medication', MedicationSchema);

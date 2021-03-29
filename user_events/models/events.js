@@ -21,27 +21,31 @@ const EventTypeSchema = new Schema({
 
     notes:{
         type: String,
-        required: true
     },
 
     time:{
+        type: Number,
+        required: true
+    },
+
+    start:{
         type: Date,
         required: true
     },
 
     end: {
-        type: Date
+        type: Number
     },
 
-   reminders:[],
+    reminders:{type:Array,default:undefined},
 
    disease: String,
 
-    symptoms:[],
+    symptoms:{type:Array,default:undefined},
 
     mood: String,
 
-    tracking: Object,
+    tracking:Object,
 
     user_id:{
         type: String,
@@ -49,4 +53,4 @@ const EventTypeSchema = new Schema({
     }
 
 });
-module.exports = mongoose.model('EventTypes', EventTypeSchema)
+module.exports = mongoose.model('Events', EventTypeSchema)
