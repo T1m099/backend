@@ -1,4 +1,4 @@
-# Installation Instructions
+# Server Installation Instructions
 
 ##Install Docker
 If you haven't already installed Docker on your machine, install iot first.
@@ -13,11 +13,13 @@ The following Variables have to be inserted:
 * `PRIV_KEY_PASSPHRASE=insert_your_passphrase`
 * `MONGO_DB=mongodb://user_db`
 * `PEPPER=some_random_chars`
-* `ENCRYPT_KEY=blablabla`
-* `ENCRYPT_SALT=blablabla`
+
 
 The mongo connection string ist okay and doesn't need to be changed if no changes in the code are implemented.
 <br/>
+
+Put another `.env` file with the following content in the `user_events` directory.
+* `ENCRYPT_KEY=blablabla`
 
 ##Generating a new key pair for JWT validation
 Before the App is used in a production environment, a new public-private needs to be generated, since the ones that are already in, are publicly available on GitHub 
@@ -30,6 +32,12 @@ Before the App is used in a production environment, a new public-private needs t
    
 3. move `priv.pem` into the directory `/user_logins/jwt` and replace the already existing file
 4. mode `pub.pem` into the directory `/user_events/authentification` replace the already existing file
+
+##Set up certificates for SSL
+Create the folder `certificates` in the `traefik/certificates` directory and insert
+the file `server-cert.crt` with the certificate for ssl.
+Also insert the file `priv.pem` with the corresponding key.
+
 
 ##Start the application
 you can now start the application by running `docker-compose up -d --build --remove-orphans`
