@@ -6,7 +6,8 @@ const {Schema} = mongoose;
 const FileSchema = new Schema({
     name:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     user_id:{
@@ -18,6 +19,5 @@ const FileSchema = new Schema({
         type: String,
         required: true
     }
-
 });
-module.exports = mongoose.model('Events', EventTypeSchema)
+module.exports = mongoose.model('File', FileSchema);

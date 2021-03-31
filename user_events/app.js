@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const mongoose = require('mongoose');
-
+const file = require('./routes/file')
 const events = require('./routes/events');
 const medications = require('./routes/medications');
 
@@ -16,6 +16,7 @@ const app = express();
 require ('./authentification/passport')(passport);
 app.use(passport.initialize());
 app.use(express.json());
+require('dotenv').config();
 
 //connect mongoose
 mongoose
@@ -30,6 +31,7 @@ mongoose
 app.use(express.json({type: "application/json"}));
 app.use('/events', events);
 app.use('/medications', medications);
+app.use('/file', file);
 
 
 console.log("Hello World, die App ist auf 80");

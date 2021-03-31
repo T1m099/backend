@@ -19,15 +19,6 @@ function validatePw(password, hash, salt){
  return hash === hashToVerify;
 }
 
-async function validateHash(hash, mail) {
-    const user = await User.findOne(({mail: mail}))
-        .catch((err) => {
-            console.log(err);
-        })
-    return user.hash === hash;
-}
-
-
 function encryptData (text){
     //create initialization verctor and encryption key
     const initVector = crypto.randomBytes(16);
@@ -57,6 +48,5 @@ function decryptData (cipher){
 
 module.exports.genPassHash = genPassHash;
 module.exports.validatePw = validatePw;
-module.exports.validateHash = validateHash;
 module.exports.encryptData = encryptData;
 module.exports.decryptData = decryptData;

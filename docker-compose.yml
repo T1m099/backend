@@ -66,7 +66,7 @@ services:
     container_name: user-logins
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.user_logins.rule=Path(`/register`) || Path(`/login`) || Path(`/getUser`) || Path(`/refresh`)"
+      - "traefik.http.routers.user_logins.rule=Path(`/register`) || Path(`/login`) || Path(`/getUser`)"
       #http redirect
       - "traefik.http.routers.user_logins.entrypoints=websecure"
       - "traefik.http.routers.user_logins.tls=true"
@@ -82,7 +82,7 @@ services:
     container_name: user-events
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.user_events.rule=Path(`/events`) || Path(`/medications`)"
+      - "traefik.http.routers.user_events.rule=Path(`/events`) || Path(`/medications`) || Path(`/file`)"
       #http redirect
       - "traefik.http.routers.user_events.entrypoints=websecure"
       - "traefik.http.routers.user_events.tls=true"
