@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const {Schema} = mongoose;
 
 const FolderSchema = new Schema({
 	name: {
@@ -16,4 +17,4 @@ const FolderSchema = new Schema({
 		required: true,
 	},
 });
-module.exports = mongoose.model('Folder', FileSchema);
+module.exports = mongoose.model('Folder', FolderSchema);

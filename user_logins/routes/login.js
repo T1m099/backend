@@ -16,7 +16,6 @@ router.post('/', function (req, res){
                 const pwIsValid = encryptUtils.validatePw(req.body.password, user.hash, user.salt);
 
                 if(pwIsValid){
-                    console.log("lgjbfhsdlkfjsbdöfijshöasohösdojhvfsoifofh")
                     const jwtToken = jwt.issueJWT(user);
                     res.status(200).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn, user:{
                         username: user.name,

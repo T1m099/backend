@@ -9,7 +9,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), async (req, res)
     const {parent_id, name} = req.body;
     if (name && parent_id) {
         try {
-            const folders = await Folder.find({user_id: req.user._id, name, parent_id});
+            const folders = await Folder.find({user_id: req.user._id});
             const returnFolders = folders.map(f => {
                 const {user_id, __v, _id: id, ...rest} = f.toObject()
                 return {
