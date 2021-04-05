@@ -70,7 +70,7 @@ router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
             if (err) {
                 res.status(400).json(err);
             } else {
-                const {__v, user_id, _id: id, ...resp} = result;
+                const {__v, user_id, _id: id, ...resp} = result.toObject();
                 res.status(200).json({id, ...resp});
             }
         });

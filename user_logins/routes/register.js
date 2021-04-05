@@ -25,8 +25,8 @@ router.post('/', function (req, res, next){
             .then((result) => {
                 const jwtToken = jwt.issueJWT(result);
                 console.log('User created');
-                //respond with a token and a succcess message
-                res.status(201).json({success: true, token: jwtToken.token, expiresIn: jwtToken.expiresIn});
+                const {hash, _id: id, salt, __v, ...rest} = result.toObject()
+                res.status(201).json({user: {id, ...rest}, token: jwtToken.token, expiresIn: jwtToken.expiresIn});
             })
             .catch((err) => {
                 console.log(err);

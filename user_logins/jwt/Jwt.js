@@ -18,7 +18,7 @@ function issueJWT(user){
 
     return {
         token: "Bearer " + signedToken,
-        expiresIn: expiresIn
+        expiresIn: new Date(Date.now().getTime() + 23.75*60*60*1000)
     }
 }
 
