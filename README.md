@@ -24,7 +24,7 @@ Put another `.env` file with the following content in the `user_events` director
 ##Generating a new key pair for JWT validation
 Before the App is used in a production environment, a new public-private needs to be generated, since the ones that are already in, are publicly available on GitHub 
 <br/>
-1. Install the dependencies for that file   
+1. In the folder run `npm install dotenv`
 2. run the `generateKeyPair.js` file
     1. go into the terminal and navigate to the directory `/user_logins/cryptography`
     2. run the file with `node generateKeyPair`

@@ -40,6 +40,7 @@ router.post(
     (req, res) => {
         const file = new File({
             user_id: req.user._id,
+            timestamp: req.body.timestamp,
             file: utils.encryptData(req.body.file, req.user),
             name: req.body.name
         });
