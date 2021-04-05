@@ -5,18 +5,18 @@ const passport = require('passport');
 
 const router = express.Router();
 
-router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-    const {parent_id,name}=req.body;
+router.get('/', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    const {parent_id, name} = req.body;
     if (name && parent_id) {
         try {
-            const folders = await Folder.find({user_id: req.user._id, name,parent_id});
+            const folders = await Folder.find({user_id: req.user._id, name, parent_id});
             const returnFolders = folders.map(f => {
                 const {user_id, __v, _id: id, ...rest} = f.toObject()
                 return {
                     id, ...rest
                 }
             })
-            return res.status(200).json({folders:returnFolders});
+            return res.status(200).json({folders: returnFolders});
         } catch (error) {
             console.log(err);
             res.status(500).json({
@@ -31,7 +31,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 router.post(
     '/',
     passport.authenticate('jwt', {session: false}),
-    (req, res) => {
+    async (req, res) => {
         const folder = new Folder({
             user_id: req.user._id,
             ...req.body
