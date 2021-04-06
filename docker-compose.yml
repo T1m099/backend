@@ -12,33 +12,24 @@ services:
     build: ./traefik
     container_name: traefik
     command:
-      #    - --log.level=DEBUG
+      - --log.level=DEBUG
       #    - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-   #   - "--api.insecure=true"
+      - "--api.insecure=false"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.file.directory=/etc/traefik"
       - "--providers.file.watch=true"
       - "--configFile=./etc/traefik/traefik.yml"
-      #HTTP to HTTPS redirect
-    #      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-    #      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-    #      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-    #      - "--certificatesresolvers.myresolver.acme.email=wi19002@lehre.dhbw-stuttgart.de"
-    #      - "--certificatesresolvers.myresolver.acme.storage=/cert/acme.json"
     ports:
       #    - "80:80"
       - "443:443"
       #enabled die Browser Oberfläche zusammen mit api insecure= true
   #    - "8080:8080"
     volumes:
-      #Volumes are necessary for the nodemon integration -> no rebuilding necessary
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik/configuration:/etc/traefik/dynamic/certs-traefik.yaml"
       - "./traefik/configuration/certificates:/etc/certs/"
-      #necessary for Lets encrypt
-    #      - "./traefik/letsencrypt:/letsencrypt/"
     networks:
       - traefik-network
     labels:
@@ -63,10 +54,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.user_logins.rule=Path(`/register`) || Path(`/login`) || Path(`/getUser`)"
-      #http redirect
       - "traefik.http.routers.user_logins.entrypoints=websecure"
       - "traefik.http.routers.user_logins.tls=true"
-    #      - "traefik.http.routers.user_logins.tls.certresolver=myresolver"
     volumes:
       - ./user_logins:/app
     networks:
@@ -79,10 +68,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.user_events.rule=Path(`/events`) || Path(`/medications`) || Path(`/files`) || Path(`/folders`)"
-      #http redirect
       - "traefik.http.routers.user_events.entrypoints=websecure"
       - "traefik.http.routers.user_events.tls=true"
-    #      - "traefik.http.routers.user_logins.tls.certresolver=myresolver"
 
     volumes:
       - ./user_events:/app
