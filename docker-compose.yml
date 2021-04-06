@@ -82,7 +82,7 @@ services:
     container_name: user-events
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.user_events.rule=Path(`/events`) || Path(`/medications`) || Path(`/file`) || Path(`/folders`)"
+      - "traefik.http.routers.user_events.rule=Path(`/events`) || Path(`/medications`) || Path(`/files`) || Path(`/folders`)"
       #http redirect
       - "traefik.http.routers.user_events.entrypoints=websecure"
       - "traefik.http.routers.user_events.tls=true"

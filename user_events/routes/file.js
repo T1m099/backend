@@ -30,7 +30,26 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
                 });
             });
     } else {
-        return res.status(400).json("No name given");
+        //return res.status(400).json("No name given");
+        File.find({user_id: req.user._id})
+            .then(docs => {
+                const response = {
+                    file: docs.map(doc => {
+                        const {_id: id, timestamp, ...rest} = doc.toObject();
+                        return {
+                            id,
+                            timestamp
+                        };
+                    }),
+                };
+                res.status(200).json(response);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    error: err,
+                });
+            })
     }
 });
 
