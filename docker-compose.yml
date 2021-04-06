@@ -42,10 +42,6 @@ services:
     networks:
       - traefik-network
     labels:
-      #      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
-      # - "traefik.http.routers.http-catchall.entrypoints=websecure"
-      #    - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
-      #     - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.docker.network=traefik-network"
 
 
