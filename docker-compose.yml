@@ -12,7 +12,7 @@ services:
     build: ./traefik
     container_name: traefik
     command:
-      - --log.level=DEBUG
+      #- --log.level=DEBUG
       #    - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--api.insecure=false"
