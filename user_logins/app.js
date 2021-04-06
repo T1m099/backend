@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const login = require('./routes/login');
 const register = require('./routes/register');
 const getUser = require('./routes/getUser');
+const initErrorHandling = require('./errorHandling/initErrorHandling')
 require('dotenv').config();
 
 
@@ -14,6 +15,7 @@ app.use(express.json({type: 'application/json'}));
 app.use('/login', login);
 app.use('/register', register);
 app.use('/getUser', getUser);
+initErrorHandling();
 
 
 //connect to DB

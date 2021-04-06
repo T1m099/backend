@@ -5,7 +5,7 @@ const file = require('./routes/file');
 const events = require('./routes/events');
 const medications = require('./routes/medications');
 const folders = require('./routes/folders');
-
+const initErrorHandling = require('./errorHandling/initErrorHandling')
 //Initialize App
 const app = express();
 
@@ -30,6 +30,8 @@ app.use('/events', events);
 app.use('/medications', medications);
 app.use('/files', file);
 app.use('/folders', folders);
+initErrorHandling();
+
 
 console.log('Hello World, die App ist auf 80');
 app.listen(80);

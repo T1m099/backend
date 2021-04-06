@@ -78,4 +78,18 @@ router.post(
     }
 );
 
+router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+    if (req.body.id != null) {
+        File.findOneAndDelete({_id: req.body.id}, {useFindAndModify: true}, function (err) {
+            if (err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json({msg: "Successful deletion", id: req.body.id});
+            }
+        });
+    } else {
+        res.status(400).json("Could not find attribute _id in body");
+    }
+});
+
 module.exports = router;
