@@ -7,34 +7,30 @@ const passport = require('passport');
 const router = express.Router();
 
 router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-    if (req.body.name != null) {
-        File.find({user_id: req.user._id, name: req.body.name})
-            .then(docs => {
-                const response = {
-                    file: docs.map(doc => {
-                        const decryptedFile = utils.decryptData(doc.file, req.user)
-                        const {_id: id, __v, file, user_id, ...rest} = doc.toObject();
-                        return {
-                            id,
-                            file: decryptedFile,
-                            ...rest,
-                        };
-                    }),
-                };
-                res.status(200).json(response);
-            })
-            .catch(err => {
+    if (req.body.id != null) {
+        File.findById(req.body.id, function (err, file) {
+            if(!err){
+                const {_id: id, __v, file, user_id, ...rest} = file.toObject();
+                const decryptedFile = utils.decryptData(file, req.user)
+                res.status(200).json({
+                    id,
+                    file: decryptedFile,
+                    ...rest,
+                });
+            }
+            else{
                 console.log(err);
                 res.status(500).json({
                     error: err,
                 });
-            });
+            }
+        })
     } else {
         //return res.status(400).json("No name given");
         File.find({user_id: req.user._id})
             .then(docs => {
                 const response = {
-                    file: docs.map(doc => {
+                    fileMetaData: docs.map(doc => {
                         const {_id: id, timestamp, ...rest} = doc.toObject();
                         return {
                             id,
@@ -66,9 +62,11 @@ router.post(
         file
             .save()
             .then(result => {
-                const {user_id, file, __v, _id: id, ...rest} = result.toObject();
+                const {user_id, __v, _id: id, ...rest} = result.toObject();
+                const file = utils.decryptData(result.file ,req.user)
                 res.status(201).json({
                     id,
+                    file,
                     ...rest,
                 });
             })
