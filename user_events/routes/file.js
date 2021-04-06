@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if (req.body.id != null) {
+        console.log("Bis hier her gehts");
         File.findById(req.body.id, function (err, file) {
             if(!err){
                 const {_id: id, __v, file, user_id, ...rest} = file.toObject();
