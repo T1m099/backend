@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const FolderSchema = new Schema({
 	name: {
@@ -12,7 +12,7 @@ const FolderSchema = new Schema({
 		required: true,
 	},
 
-	parent_id: {
+	parentId: {
 		type: String,
 		required: true,
 	},
