@@ -61,20 +61,19 @@ router.post(
 	'/',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
-		const file = new File({
+		const {file, ...rest} = req.body;
+		const newFile = new File({
 			user_id: req.user._id,
-			timestamp: req.body.timestamp,
-			file: utils.encryptData(req.body.file, req.user),
-			name: req.body.name,
+			file: utils.encryptData(file, req.user),
+			...rest
 		});
-		file.save()
+		newFile.save()
 			.then(result => {
 				const { user_id, __v, _id: id, ...rest } = result.toObject();
-				const file = utils.decryptData(result.file, req.user);
 				res.status(201).json({
 					id,
-					file,
 					...rest,
+					file
 				});
 			})
 			.catch(err => {
