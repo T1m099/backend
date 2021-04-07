@@ -12,7 +12,7 @@ const app = express();
 //Initialize Passport
 require('./authentification/passport')(passport);
 app.use(passport.initialize());
-app.use(express.json());
+app.use(express.json({limit: '40mb'}));
 require('dotenv').config();
 
 //connect mongoose
