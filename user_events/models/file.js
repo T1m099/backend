@@ -1,27 +1,33 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 //import mongoose from 'mongoose'
 
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const FileSchema = new Schema({
-    name:{
-        type: String,
-        required: true,
-        unique: true
-    },
+	name: {
+		type: String,
+		required: true,
+		unique: true,
+	},
 
-    user_id:{
-        type: String,
-        required: true
-    },
+	user_id: {
+		type: String,
+		required: true,
+	},
 
-    file:{
-        type: String,
-        required: true
-    },
+	file: {
+		type: String,
+		required: true,
+	},
 
-    timestamp:{
-        type: Number
-    }
+	timestamp: {
+		type: Number,
+		required: true,
+	},
+	parentId: {
+		type: String,
+		required: true,
+	},
+	size: { type: Number },
 });
 module.exports = mongoose.model('File', FileSchema);
