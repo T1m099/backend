@@ -4,6 +4,7 @@ const passport = require('passport');
 
 const router = express.Router();
 
+//get all folders for the user calling the route
 router.get(
 	'/',
 	passport.authenticate('jwt', { session: false }),
@@ -27,6 +28,8 @@ router.get(
 	}
 );
 
+
+//create new folder
 router.post(
 	'/',
 	passport.authenticate('jwt', { session: false }),
@@ -49,6 +52,8 @@ router.post(
 	}
 );
 
+
+//delete folder with given id
 router.delete(
 	'/',
 	passport.authenticate('jwt', { session: false }),

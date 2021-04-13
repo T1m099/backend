@@ -4,6 +4,8 @@ const passport = require('passport');
 
 const router = express.Router();
 
+//get one medications for the user that calls the route
+//user attribute comes from the middlware, which reads it from the jwt
 router.get(
 	'/',
 	passport.authenticate('jwt', { session: false }),
@@ -30,6 +32,8 @@ router.get(
 	}
 );
 
+
+//create a new medication
 router.post(
 	'/',
 	passport.authenticate('jwt', { session: false }),
@@ -55,6 +59,8 @@ router.post(
 	}
 );
 
+
+//delete a medication with the given id
 router.delete(
 	'/',
 	passport.authenticate('jwt', { session: false }),
@@ -77,6 +83,8 @@ router.delete(
 	}
 );
 
+
+//update medication with the given id
 router.put(
 	'/',
 	passport.authenticate('jwt', { session: false }),

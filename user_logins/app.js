@@ -11,10 +11,12 @@ require('dotenv').config();
 const app = express();
 
 //init app
+//middleware for request-body-parsing
 app.use(express.json({type: 'application/json'}));
 app.use('/login', login);
 app.use('/register', register);
 app.use('/getUser', getUser);
+//inititalize Error Handling Middleware
 initErrorHandling();
 
 

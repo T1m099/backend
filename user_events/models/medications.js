@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+
+//schema for a medication the user has to take in --> all medications of a user together is the medication plan
 const MedicationSchema = new Schema({
 	uniquenessCheck: {
         type:String,

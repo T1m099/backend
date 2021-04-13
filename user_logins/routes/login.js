@@ -5,7 +5,10 @@ const jwt = require('../jwt/Jwt');
 
 const router = express.Router();
 
+
+//route for logging in --> getting a new jwt
 router.post('/', function (req, res){
+    //find user by the mail
     User.findOne({mail: req.body.mail})
         .then((user) => {
 
@@ -13,6 +16,7 @@ router.post('/', function (req, res){
                 return res.status(404).json({success: false, msg: "Could not find any user with that mail"})
             }
             else{
+                //check if the given password is correct
                 const pwIsValid = encryptUtils.validatePw(req.body.password, user.hash, user.salt);
 
                 if(pwIsValid){

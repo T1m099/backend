@@ -6,6 +6,8 @@ const passport = require('passport');
 
 const router = express.Router();
 
+
+//get all calender events for the user calling the route
 router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     Events.find({user_id: req.user._id})
         .then(docs => {
@@ -27,6 +29,8 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
         });
 });
 
+
+//create a new calender event
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     const eventType = new Events({
         ...req.body,
@@ -44,6 +48,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 })
 
 
+//delete the calendar event with the given id
 router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if (req.body.id != null) {
         Events.findOneAndDelete({_id: req.body.id}, {useFindAndModify: true}, function (err) {
@@ -59,6 +64,7 @@ router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) =>
 });
 
 
+//update a calendar event
 router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if (req.body.id != null) {
         const {id, ...rest} = req.body

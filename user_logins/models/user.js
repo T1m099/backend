@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
+//Database schema for user
 const userSchema = new Schema({
     name: {
         required: true,

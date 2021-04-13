@@ -5,10 +5,10 @@ const jwt = require('../jwt/Jwt');
 
 const router = express.Router();
 
-//get a new jwt --> user is searched in db by mail
-//object needed in body: {name: ..., password: ..., mail: ...}
-router.post('/', function (req, res, next){
+//route for registering a new user
+router.post('/', function (req, res){
     if(req.body.password != null && req.body.password.length > 1){
+        //Hash the password if it is given in the body
         let saltAndHash = encryptUtils.genPassHash(req.body.password);
         let hash = saltAndHash.hash;
         let salt = saltAndHash.salt;
@@ -21,6 +21,7 @@ router.post('/', function (req, res, next){
             salt: salt
         });
 
+        //save the user in the db and return the object and the jwt
         user.save()
             .then((result) => {
                 const jwtToken = jwt.issueJWT(result);

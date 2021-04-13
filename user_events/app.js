@@ -12,6 +12,7 @@ const app = express();
 //Initialize Passport
 require('./authentification/passport')(passport);
 app.use(passport.initialize());
+//change body-size limit of express for fileupload
 app.use(express.json({limit: '40mb'}));
 require('dotenv').config();
 

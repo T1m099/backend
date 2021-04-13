@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 
 const {Schema} = mongoose;
 
+
+//schema for all calendar events: that is appointments (doctor/therapy or private), mood tracking, symptom tracking,
 const EventTypeSchema = new Schema({
     type:{
       type: String,

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+//schema for the files a user can upload
 const FileSchema = new Schema({
 	name: {
 		type: String,

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+//Schema for the folder that represent the folder structure a user can create
 const FolderSchema = new Schema({
 	name: {
 		type: String,
