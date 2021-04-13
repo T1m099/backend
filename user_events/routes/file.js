@@ -34,7 +34,7 @@ router.get('/', passport.authenticate('jwt', {session: false}),
 
 //get the with the id given in the body
 //this is a post-request, because the get request normally has no body and we wanted to give the id in the body instead of a URL-parameter
-router.post('download', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.post('/download', passport.authenticate('jwt', {session: false}), (req, res) => {
     try {
         File.findById(req.body.id, function (err, fileObject) {
             if (!err) {
