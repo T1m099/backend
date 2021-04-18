@@ -12,6 +12,7 @@ const router = express.Router();
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     try {
         File.findById(req.body.id, function (err, fileObject) {
+            console.log(fileObject, err);
             if (!err) {
                 const {
                     _id: id,
