@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const file = require('./routes/file');
+const downloads = require('./routes/downloads');
 const events = require('./routes/events');
 const medications = require('./routes/medications');
 const folders = require('./routes/folders');
@@ -31,6 +32,7 @@ app.use('/events', events);
 app.use('/medications', medications);
 app.use('/files', file);
 app.use('/folders', folders);
+app.use('/downloads', downloads);
 initErrorHandling();
 
 

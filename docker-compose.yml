@@ -67,7 +67,7 @@ services:
     container_name: user-events
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.user_events.rule=Host(`www.itworksonmymachine.studio`) && Path(`/events`) || Path(`/medications`) || Path(`/files`) || Path(`/folders`)"
+      - "traefik.http.routers.user_events.rule=Host(`www.itworksonmymachine.studio`) && Path(`/events`) || Path(`/medications`) || Path(`/files`) || Path(`/folders`) || Path(`/downloads`)"
       - "traefik.http.routers.user_events.entrypoints=websecure"
       - "traefik.http.routers.user_events.tls=true"
 
